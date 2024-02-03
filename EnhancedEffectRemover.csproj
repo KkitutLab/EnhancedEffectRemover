@@ -69,6 +69,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "D:\Games\Adofai\Versions\r120 Playable\Mods\EnhancedEffectRemover\EnhancedEffectRemover.dll"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "D:\Games\Adofai\Versions\r120 Playable\Mods\Enhanced Effect Remover\EnhancedEffectRemover.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>

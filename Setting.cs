@@ -2,12 +2,15 @@
 using Newtonsoft.Json;
 using System.IO;
 using UnityModManagerNet;
+using System;
 
 
 namespace EnhancedEffectRemover
 {
     public class Setting
     {
+        public static readonly string filePath = UnityModManager.modsPath + "\\Enhanced Effect Remover\\Settings.json";
+
         public static bool setTrackAnimationtoDefault;
         public static bool setCameratoDefault;
         public static bool setTrackColortoDefault;
@@ -19,12 +22,11 @@ namespace EnhancedEffectRemover
         public static bool removeTracks;
         public static bool removeTrackAnimations;
         public static bool removeTrackColors;
-
+        
         public static void LoadGUI()
         {
            if (Main.isEnabled)
            {
-                GUILayout.Label(Path.Combine(UnityModManager.modsPath + "\\Enhanced Effect Remover\\settings.json"));
                 GUILayout.BeginVertical();
 
                 GUILayout.Space(10);
@@ -72,14 +74,61 @@ namespace EnhancedEffectRemover
 
         public static void Load()
         {
-            string filePath = Path.Combine(UnityModManager.modsPath + "\\Enhanced Effect Remover\\settings.json");
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                SettingData data = JsonConvert.DeserializeObject<SettingData>(json);
 
-            Main.Logger.Log(filePath);
-            //File.Exists();          
+                setTrackAnimationtoDefault = data.setTrackAnimationtoDefault;
+                setCameratoDefault = data.setCameratoDefault;
+                setTrackColortoDefault = data.setTrackColortoDefault;
+
+                removeCameras = data.removeCameras;
+                removeDecos = data.removeDecos;
+                removeFilters = data.removeFilters;
+                removeBackgrounds = data.removeBackgrounds;
+                removeTracks = data.removeTracks;
+                removeTrackAnimations = data.removeTrackAnimations;
+                removeTrackColors = data.removeTrackColors;
+            } else
+            {
+                Save();
+            }
         }
         public static void Save()
         {
+            SettingData data = new SettingData
+            {
+                setTrackAnimationtoDefault = setTrackAnimationtoDefault,
+                setCameratoDefault = setCameratoDefault,
+                setTrackColortoDefault = setTrackColortoDefault,
+                removeCameras = removeCameras,
+                removeDecos = removeDecos,
+                removeFilters = removeFilters,
+                removeBackgrounds = removeBackgrounds,
+                removeTracks = removeTracks,
+                removeTrackAnimations = removeTrackAnimations,
+                removeTrackColors = removeTrackColors
+            };
 
+            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            File.WriteAllText(filePath, json);
         }
+    }
+
+    [System.Serializable]
+    public class SettingData
+    {
+        public bool setTrackAnimationtoDefault;
+        public bool setCameratoDefault;
+        public bool setTrackColortoDefault;
+
+        public bool removeCameras;
+        public bool removeDecos;
+        public bool removeFilters;
+        public bool removeBackgrounds;
+        public bool removeTracks;
+        public bool removeTrackAnimations;
+        public bool removeTrackColors;
     }
 }

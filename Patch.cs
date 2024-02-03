@@ -12,6 +12,7 @@ namespace EnhancedEffectRemover {
             static void Postfix(LevelData __instance, ref LoadResult status)
             {
                 Remover.Remove(__instance);
+                Setting.Save();
 
                 status = LoadResult.Successful;
             }
