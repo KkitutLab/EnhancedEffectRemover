@@ -62,6 +62,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Games\SteamLibrary\steamapps\common\A Dance of Fire and Ice\A Dance of Fire and Ice_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="UnityModManager, Version=0.27.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Games\SteamLibrary\steamapps\common\A Dance of Fire and Ice\A Dance of Fire and Ice_Data\Managed\UnityModManager\UnityModManager.dll</HintPath>
@@ -69,6 +70,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "D:\Games\Adofai\Versions\r120 Playable\Mods\Enhanced Effect Remover\EnhancedEffectRemover.dll"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "D:\Games\Adofai\Versions\r120 Playable\Mods\EnhancedEffectRemover\EnhancedEffectRemover.dll"
+copy "$(TargetPath)" "D:\Games\SteamLibrary\steamapps\common\A Dance of Fire and Ice\Mods\EnhancedEffectRemover\EnhancedEffectRemover.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>

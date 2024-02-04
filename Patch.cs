@@ -19,8 +19,32 @@ namespace EnhancedEffectRemover {
         }
 
 
+        [HarmonyPatch(typeof(scnEditor), "LoadGameScene")]
+        class ForceLockOn
+        {
+            static void Postfix(scnEditor __instance)
+            {
+                __instance.lockPathEditing = true;
+                __instance.lockBackground.color = __instance.shortcutsLockColor;
+                __instance.lockIcon.color = __instance.shortcutsLockIconColor;
+                __instance.lockIcon.sprite = __instance.lockSpriteOn;
+                __instance.floorButtonContainer.SetActive(false);
+            }
+        }
+
+
         [HarmonyPatch(typeof(scnEditor), "SaveLevel")]
         class BlockLevelSave
+        {
+            static bool Prefix()
+            {
+                return false;
+            }
+        }
+
+
+        [HarmonyPatch(typeof(scnEditor), "LockPathEditing")]
+        class BlockPathEditToggle
         {
             static bool Prefix()
             {

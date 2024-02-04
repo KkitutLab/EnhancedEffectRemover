@@ -2,14 +2,13 @@
 using Newtonsoft.Json;
 using System.IO;
 using UnityModManagerNet;
-using System;
 
 
 namespace EnhancedEffectRemover
 {
     public class Setting
     {
-        public static readonly string filePath = UnityModManager.modsPath + "\\Enhanced Effect Remover\\Settings.json";
+        public static readonly string filePath = UnityModManager.modsPath + "\\EnhancedEffectRemover\\Settings.json";
 
         public static bool setTrackAnimationtoDefault;
         public static bool setCameratoDefault;
