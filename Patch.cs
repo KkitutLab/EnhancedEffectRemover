@@ -1,5 +1,7 @@
 ﻿using ADOFAI;
+using ADOFAI.Editor.Actions;
 using HarmonyLib;
+using UnityEngine.UI;
 
 
 namespace EnhancedEffectRemover {
@@ -12,14 +14,14 @@ namespace EnhancedEffectRemover {
             static void Postfix(LevelData __instance, ref LoadResult status)
             {
                 Remover.Remove(__instance);
-                Setting.Save();
+                Settings.Save();
 
                 status = LoadResult.Successful;
             }
         }
 
 
-        [HarmonyPatch(typeof(scnEditor), "LoadGameScene")]
+        [HarmonyPatch(typeof(scnEditor), "OpenLevelCo")]
         class ForceLockOn
         {
             static void Postfix(scnEditor __instance)
@@ -29,12 +31,14 @@ namespace EnhancedEffectRemover {
                 __instance.lockIcon.color = __instance.shortcutsLockIconColor;
                 __instance.lockIcon.sprite = __instance.lockSpriteOn;
                 __instance.floorButtonContainer.SetActive(false);
+                __instance.buttonSave.interactable = false;
             }
         }
 
 
-        [HarmonyPatch(typeof(scnEditor), "SaveLevel")]
-        class BlockLevelSave
+        [HarmonyPatch(typeof(SaveLevelEditorAction))]
+        [HarmonyPatch("Execute")]
+        class SaveLevelEditorAction_Execute_Patch
         {
             static bool Prefix()
             {
@@ -50,6 +54,6 @@ namespace EnhancedEffectRemover {
             {
                 return false;
             }
-        }
+          }
     }
 }

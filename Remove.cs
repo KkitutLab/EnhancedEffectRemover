@@ -8,16 +8,14 @@ namespace EnhancedEffectRemover
     {
         public static void Remove(LevelData __instance)
         {
-            if (!Main.isEnabled) return;
-
-            if (Setting.removeDecos)
+            if (Settings.removeDecos)
             {
                 __instance.decorations.Clear();
                 __instance.decorationSettings.data.Clear();
             }
-            if (Setting.removeFilters)
+            if (Settings.removeFilters)
             {
-                if (Setting.removeDecos)
+                if (Settings.removeDecos)
                 {
                     LevelEventType[] typesToRemove =
                     {
@@ -52,7 +50,7 @@ namespace EnhancedEffectRemover
                     __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
                 }
             }
-            if (Setting.removeBackgrounds)
+            if (Settings.removeBackgrounds)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -63,7 +61,7 @@ namespace EnhancedEffectRemover
                 __instance.backgroundSettings = new LevelEvent(0, LevelEventType.BackgroundSettings, GCS.settingsInfo["BackgroundSettings"]);
                 __instance.miscSettings["bgVideo"] = "";
             }
-            if (Setting.removeCameras)
+            if (Settings.removeCameras)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -72,7 +70,7 @@ namespace EnhancedEffectRemover
 
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
 
-                if (Setting.setCameratoDefault)
+                if (Settings.setCameratoDefault)
                 {
                     float zoom = 275;
 
@@ -80,11 +78,11 @@ namespace EnhancedEffectRemover
                     __instance.cameraSettings["zoom"] = zoom;
                 }
             }
-            if (Setting.removeTracks && Setting.removeTrackColors && Setting.removeTrackAnimations)
+            if (Settings.removeTracks && Settings.removeTrackColors && Settings.removeTrackAnimations)
             {
                 __instance.trackSettings = new LevelEvent(0, LevelEventType.TrackSettings, GCS.settingsInfo["TrackSettings"]);
             }
-            if (Setting.removeTracks && Setting.removeTrackAnimations)
+            if (Settings.removeTracks && Settings.removeTrackAnimations)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -95,7 +93,7 @@ namespace EnhancedEffectRemover
 
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
 
-                if (Setting.setTrackAnimationtoDefault)
+                if (Settings.setTrackAnimationtoDefault)
                 {
                     __instance.trackSettings["trackAppearAnimation"] = TrackAnimationType.Fade;
                     __instance.trackSettings["trackDisappearAnimation"] = TrackAnimationType.Fade;
@@ -103,7 +101,7 @@ namespace EnhancedEffectRemover
                     __instance.trackSettings["beatsBehind"] = (float)0;
                 }
             }
-            if (Setting.removeTracks && Setting.removeTrackColors)
+            if (Settings.removeTracks && Settings.removeTrackColors)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -113,7 +111,7 @@ namespace EnhancedEffectRemover
 
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
 
-                if (Setting.setTrackColortoDefault)
+                if (Settings.setTrackColortoDefault)
                 {
                     __instance.trackSettings["trackStyle"] = TrackStyle.Standard;
                     __instance.trackSettings["trackColor"] = "debb7bff";

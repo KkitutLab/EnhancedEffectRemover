@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using System.Reflection;
+using System.IO;
 using UnityModManagerNet;
 
 
@@ -10,8 +11,7 @@ namespace EnhancedEffectRemover
         public static UnityModManager.ModEntry.ModLogger Logger;
         public static Harmony harmony;
 
-        public static bool isEnabled = false;
-
+        public static string settingsPath;
         public static void StartUp(UnityModManager.ModEntry modEntry)
         {
             Logger = modEntry.Logger;
@@ -19,13 +19,13 @@ namespace EnhancedEffectRemover
             modEntry.OnToggle = OnToggle;
             modEntry.OnGUI = OnGUI;
 
-            Setting.Load();
+            settingsPath = Path.Combine(modEntry.Path, "Settings.json");
+
+            Settings.Load();
         }
 
         private static bool OnToggle(UnityModManager.ModEntry modEntry, bool isToggled)
         {
-            isEnabled = isToggled;
-
             if (isToggled)
             {
                 harmony = new Harmony(modEntry.Info.Id);
@@ -41,7 +41,7 @@ namespace EnhancedEffectRemover
 
         private static void OnGUI(UnityModManager.ModEntry modEntry)
         {
-            Setting.LoadGUI();
+            Settings.LoadGUI();
         }
     }
 }
