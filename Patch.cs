@@ -1,7 +1,6 @@
 ﻿using ADOFAI;
 using ADOFAI.Editor.Actions;
 using HarmonyLib;
-using UnityEngine.UI;
 
 
 namespace EnhancedEffectRemover {
@@ -14,7 +13,6 @@ namespace EnhancedEffectRemover {
             static void Postfix(LevelData __instance, ref LoadResult status)
             {
                 Remover.Remove(__instance);
-                Settings.Save();
 
                 status = LoadResult.Successful;
             }
@@ -55,5 +53,17 @@ namespace EnhancedEffectRemover {
                 return false;
             }
           }
+
+
+        [HarmonyPatch(typeof(scnEditor), "LoadGameScene")]
+
+        class OnLoad
+        {
+            static void Postfix()
+            {
+                Main.settings.Save();
+            }
+        }
+
     }
 }

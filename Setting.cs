@@ -2,29 +2,32 @@
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using UnityModManagerNet;
+using Microsoft.Win32.SafeHandles;
 
 
 namespace EnhancedEffectRemover
 {
     public class Settings
     {
+        public bool setTrackAnimationtoDefault;
+        public bool setCameratoDefault;
+        public bool setTrackColortoDefault;
 
-        public static bool setTrackAnimationtoDefault;
-        public static bool setCameratoDefault;
-        public static bool setTrackColortoDefault;
+        public bool removeCameras;
+        public bool removeDecos;
+        public bool removeFilters;
+        public bool removeBackgrounds;
+        public bool removeTracks;
+        public bool removeTrackAnimations;
+        public bool removeTrackColors;
 
-        public static bool removeCameras;
-        public static bool removeDecos;
-        public static bool removeFilters;
-        public static bool removeBackgrounds;
-        public static bool removeTracks;
-        public static bool removeTrackAnimations;
-        public static bool removeTrackColors;
+        public float zoomScale = 250;
 
-        public static void LoadGUI()
+        [JsonIgnore]
+        public string zoomString = "250";  
+
+        public void LoadGUI()
         {
-            GUILayout.Label(Main.settingsPath);
             GUILayout.BeginVertical();
 
             GUILayout.Space(10);
@@ -60,8 +63,33 @@ namespace EnhancedEffectRemover
             {
                 GUILayout.BeginVertical();
 
-                GUILayout.Space(30);
-                if (removeCameras) setCameratoDefault = GUILayout.Toggle(setCameratoDefault, " Set Camera to Default");
+                GUILayout.Space(20);
+                GUILayout.BeginHorizontal();
+
+                if (removeCameras)
+                {
+                    setCameratoDefault = GUILayout.Toggle(setCameratoDefault, " Set Camera Zoom (100 ~ 1000) ");
+                    if (setCameratoDefault)
+                    {
+                        GUILayout.BeginHorizontal();
+
+                        zoomString = GUILayout.TextField(zoomString, GUILayout.Width(100));
+                        if (float.TryParse(zoomString, out zoomScale))
+                        {
+                            if (zoomScale < 100 || zoomScale > 1000)
+                            {
+                                GUILayout.Label("<color=#ff0000> Out of Range !</color>");
+                                zoomScale = 250;
+                            }
+                        }
+                        else zoomString = "250";
+
+                        GUILayout.FlexibleSpace();  
+                        GUILayout.EndHorizontal();
+                    }
+                }
+                GUILayout.EndHorizontal();
+
                 if (removeTrackAnimations) setTrackAnimationtoDefault = GUILayout.Toggle(setTrackAnimationtoDefault, " Set Track Animation to Default");
                 if (removeTrackColors) setTrackColortoDefault = GUILayout.Toggle(setTrackColortoDefault, " Set Track Color to Default");
 
@@ -69,15 +97,16 @@ namespace EnhancedEffectRemover
             }
         }
 
-        public static void Load()
+        public void Load()
         {
             if (File.Exists(Main.settingsPath))
             {
                 try
                 {
-                    Settings settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(Main.settingsPath));
-                }
-                catch (Exception e)
+                    JsonConvert.PopulateObject(File.ReadAllText(Main.settingsPath), this);
+
+                    zoomString = zoomScale.ToString();
+                } catch (Exception e)
                 {
                     Main.Logger.Error(e.Message);
                 }
@@ -86,11 +115,11 @@ namespace EnhancedEffectRemover
                 Save();
             }
         }
-        public static void Save()
+        public void Save()
         {
             try
             {
-                File.WriteAllText(Main.settingsPath, JsonConvert.SerializeObject(new Settings(), Formatting.Indented));
+                File.WriteAllText(Main.settingsPath, JsonConvert.SerializeObject(this, Formatting.Indented));
             } catch (Exception e)
             {
                 Main.Logger.Error(e.Message);
