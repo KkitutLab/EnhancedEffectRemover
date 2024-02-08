@@ -3,21 +3,19 @@ using ADOFAI.Editor.Actions;
 using HarmonyLib;
 
 
-namespace EnhancedEffectRemover {
-
+namespace EnhancedEffectRemover
+{ 
     public class RemoveEffects
     {
+
         [HarmonyPatch(typeof(LevelData), "Decode")]
         class LevelDecodePatch
         {
-            static void Postfix(LevelData __instance, ref LoadResult status)
+            static void Postfix(LevelData __instance)
             {
                 Remover.Remove(__instance);
-
-                status = LoadResult.Successful;
             }
         }
-
 
         [HarmonyPatch(typeof(scnEditor), "OpenLevelCo")]
         class ForceLockOn
@@ -33,10 +31,8 @@ namespace EnhancedEffectRemover {
             }
         }
 
-
-        [HarmonyPatch(typeof(SaveLevelEditorAction))]
-        [HarmonyPatch("Execute")]
-        class SaveLevelEditorAction_Execute_Patch
+        [HarmonyPatch(typeof(SaveLevelEditorAction), "Execute")]
+        class BlockSave
         {
             static bool Prefix()
             {
@@ -44,9 +40,8 @@ namespace EnhancedEffectRemover {
             }
         }
 
-
         [HarmonyPatch(typeof(scnEditor), "LockPathEditing")]
-        class BlockPathEditToggle
+        class BlockPathEdit
         {
             static bool Prefix()
             {
@@ -54,16 +49,14 @@ namespace EnhancedEffectRemover {
             }
           }
 
-
         [HarmonyPatch(typeof(scnEditor), "LoadGameScene")]
 
-        class OnLoad
+        class SaveOnLoad
         {
             static void Postfix()
             {
                 Main.settings.Save();
             }
         }
-
     }
 }
