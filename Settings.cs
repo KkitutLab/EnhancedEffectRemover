@@ -9,13 +9,14 @@ namespace EnhancedEffectRemover
     public class Settings
     {
         public bool setTrackAnimationtoDefault;
-        public bool setCameratoDefault;
+        public bool setCamera;
         public bool setTrackColortoDefault;
 
-        public bool removeCameras;
-        public bool removeDecos;
         public bool removeFilters;
+        public bool removeDecos;
         public bool removeBackgrounds;
+        public bool removePlanetRotations;
+        public bool removeCameras;
         public bool removeTracks;
         public bool removeTrackAnimations;
         public bool removeTrackColors;
@@ -31,12 +32,14 @@ namespace EnhancedEffectRemover
 
             GUILayout.Space(10);
             GUILayout.Label("<color=#FF2222><size=20> Level save will <b>NOT</b> work !!</size></color>");
+            GUILayout.Label(Main.settingsPath);
             GUILayout.Space(10);
 
             removeFilters = GUILayout.Toggle(removeFilters, " Remove Filters");
             removeDecos = GUILayout.Toggle(removeDecos, " Remove Decorations");
             removeBackgrounds = GUILayout.Toggle(removeBackgrounds, " Remove Backgrounds");
             removeCameras = GUILayout.Toggle(removeCameras, " Remove Cameras");
+            removePlanetRotations = GUILayout.Toggle(removePlanetRotations, " Remove PlanetRotations");
             removeTracks = GUILayout.Toggle(removeTracks, " Remove Tracks");
 
             GUILayout.EndHorizontal();
@@ -61,33 +64,34 @@ namespace EnhancedEffectRemover
             if (removeCameras || (removeTrackAnimations && removeTracks) || (removeTrackColors && removeTracks))
             {
                 GUILayout.BeginVertical();
-
                 GUILayout.Space(20);
-                GUILayout.BeginHorizontal();
 
                 if (removeCameras)
                 {
-                    setCameratoDefault = GUILayout.Toggle(setCameratoDefault, " Set Camera Zoom (100 ~ 1000) ");
-                    if (setCameratoDefault)
+                    setCamera = GUILayout.Toggle(setCamera, " Set Camera Zoom (100 ~ 1000) ");
+                    if (setCamera)
                     {
                         GUILayout.BeginHorizontal();
 
-                        zoomString = GUILayout.TextField(zoomString, GUILayout.Width(100));
-                        if (float.TryParse(zoomString, out zoomScale))
+                        zoomScale = GUILayout.HorizontalSlider(zoomScale, 100.0f, 1000.0f, GUILayout.Width(200));
+
+                        string inputZoom = GUILayout.TextField(zoomScale.ToString("F2"));
+                        if (float.TryParse(inputZoom, out float parsedZoomScale))
                         {
-                            if (zoomScale < 100 || zoomScale > 1000)
+                            if (parsedZoomScale > 1000 || parsedZoomScale < 100)
                             {
-                                GUILayout.Label("<color=#ff0000> Out of Range !</color>");
                                 zoomScale = 250;
                             }
+                            else
+                            {
+                                zoomScale = parsedZoomScale;
+                            }
                         }
-                        else zoomString = "250";
 
-                        GUILayout.FlexibleSpace();  
+                        GUILayout.FlexibleSpace();
                         GUILayout.EndHorizontal();
                     }
                 }
-                GUILayout.EndHorizontal();
 
                 if (removeTrackAnimations) setTrackAnimationtoDefault = GUILayout.Toggle(setTrackAnimationtoDefault, " Set Track Animation to Default");
                 if (removeTrackColors) setTrackColortoDefault = GUILayout.Toggle(setTrackColortoDefault, " Set Track Color to Default");

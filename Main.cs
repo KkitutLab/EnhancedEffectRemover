@@ -12,6 +12,7 @@ namespace EnhancedEffectRemover
         public static Harmony harmony;
 
         public static Settings settings = new Settings();
+
         public static string settingsPath;
         public static void StartUp(UnityModManager.ModEntry modEntry)
         {

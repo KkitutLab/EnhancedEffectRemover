@@ -70,13 +70,21 @@ namespace EnhancedEffectRemover
 
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
 
-                if (Main.settings.setCameratoDefault)
+                if (Main.settings.setCamera)
                 {
                     float zoom = Main.settings.zoomScale;
 
                     __instance.cameraSettings = new LevelEvent(0, LevelEventType.CameraSettings, GCS.settingsInfo["CameraSettings"]);
                     __instance.cameraSettings["zoom"] = zoom;
                 }
+            }
+            if (Main.settings.removePlanetRotations)
+            {
+                LevelEventType[] typesToRemove =
+                {
+                    LevelEventType.SetPlanetRotation
+                };
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
             }
             if (Main.settings.removeTracks && Main.settings.removeTrackColors && Main.settings.removeTrackAnimations)
             {
@@ -123,7 +131,19 @@ namespace EnhancedEffectRemover
                             }
                         }
                     }
+
+                    if (eventData.eventType == LevelEventType.PositionTrack)
+                    {
+                        if (eventData.data.ContainsKey("opacity"))
+                        {
+                            if (Convert.ToSingle(eventData.data["opacity"]) > 100.0f)
+                            {
+                                eventData.data["opacity"] = 100.0f;
+                            }
+                        }
+                    }
                 }
+
 
                 if (Main.settings.setTrackColortoDefault)
                 {
