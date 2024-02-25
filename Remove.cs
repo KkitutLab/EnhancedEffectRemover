@@ -4,7 +4,7 @@ using ADOFAI;
 
 namespace EnhancedEffectRemover
 {
-    public class Remover
+    public class Remover // 판정 숨기기 제거
     {
         public static void Remove(LevelData __instance)
         {
@@ -28,7 +28,9 @@ namespace EnhancedEffectRemover
                         LevelEventType.ScreenScroll,
                         LevelEventType.DecorationSettings,
                         LevelEventType.AddDecoration,
-                        LevelEventType.MoveDecorations
+                        LevelEventType.MoveDecorations,
+                        LevelEventType.AddObject,
+                        LevelEventType.SetObject,
                     };
 
                     __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
@@ -49,6 +51,7 @@ namespace EnhancedEffectRemover
 
                     __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
                 }
+
             }
             if (Main.settings.removeBackgrounds)
             {
@@ -82,7 +85,16 @@ namespace EnhancedEffectRemover
             {
                 LevelEventType[] typesToRemove =
                 {
-                    LevelEventType.SetPlanetRotation
+                    LevelEventType.SetPlanetRotation,
+                    LevelEventType.ScalePlanets,
+                };
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
+            }
+            if (Main.settings.removeHide)
+            {
+                LevelEventType[] typesToRemove =
+                {
+                    LevelEventType.Hide,
                 };
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
             }

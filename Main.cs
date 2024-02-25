@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
+using UnityModManagerNet;
 using System.Reflection;
 using System.IO;
-using UnityModManagerNet;
 
 
 namespace EnhancedEffectRemover

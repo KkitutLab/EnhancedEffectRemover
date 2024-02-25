@@ -16,15 +16,13 @@ namespace EnhancedEffectRemover
         public bool removeDecos;
         public bool removeBackgrounds;
         public bool removePlanetRotations;
+        public bool removeHide;
         public bool removeCameras;
         public bool removeTracks;
         public bool removeTrackAnimations;
         public bool removeTrackColors;
 
         public float zoomScale = 250;
-
-        [JsonIgnore]
-        public string zoomString = "250";  
 
         public void LoadGUI()
         {
@@ -39,7 +37,8 @@ namespace EnhancedEffectRemover
             removeDecos = GUILayout.Toggle(removeDecos, " Remove Decorations");
             removeBackgrounds = GUILayout.Toggle(removeBackgrounds, " Remove Backgrounds");
             removeCameras = GUILayout.Toggle(removeCameras, " Remove Cameras");
-            removePlanetRotations = GUILayout.Toggle(removePlanetRotations, " Remove PlanetRotations");
+            removePlanetRotations = GUILayout.Toggle(removePlanetRotations, " Remove Planet Options");
+            removeHide = GUILayout.Toggle(removeHide, " Remove Hide Judgements");
             removeTracks = GUILayout.Toggle(removeTracks, " Remove Tracks");
 
             GUILayout.EndHorizontal();
@@ -107,8 +106,6 @@ namespace EnhancedEffectRemover
                 try
                 {
                     JsonConvert.PopulateObject(File.ReadAllText(Main.settingsPath), this);
-
-                    zoomString = zoomScale.ToString();
                 } catch (Exception e)
                 {
                     Main.Logger.Error(e.Message);
