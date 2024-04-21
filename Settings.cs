@@ -15,12 +15,19 @@ namespace EnhancedEffectRemover
         public bool removeFilters;
         public bool removeDecos;
         public bool removeBackgrounds;
-        public bool removePlanetRotations;
-        public bool removeHide;
+        public bool removePlanetEvents;
         public bool removeCameras;
+        public bool removeRepeatEvents;
+
         public bool removeTracks;
+        public bool removeTrackEvents;
         public bool removeTrackAnimations;
+        public bool removeTrackPos;
+        public bool removeTrackMove;
         public bool removeTrackColors;
+
+        public bool removeHoldSounds;
+        public bool removeHideIcons;
 
         public float zoomScale = 250;
 
@@ -30,18 +37,16 @@ namespace EnhancedEffectRemover
 
             GUILayout.Space(10);
             GUILayout.Label("<color=#FF2222><size=20> Level save will <b>NOT</b> work !!</size></color>");
-            GUILayout.Label(Main.settingsPath);
             GUILayout.Space(10);
 
+            GUILayout.Label("Non-DLC Settings");
             removeFilters = GUILayout.Toggle(removeFilters, " Remove Filters");
             removeDecos = GUILayout.Toggle(removeDecos, " Remove Decorations");
             removeBackgrounds = GUILayout.Toggle(removeBackgrounds, " Remove Backgrounds");
             removeCameras = GUILayout.Toggle(removeCameras, " Remove Cameras");
-            removePlanetRotations = GUILayout.Toggle(removePlanetRotations, " Remove Planet Options");
-            removeHide = GUILayout.Toggle(removeHide, " Remove Hide Judgements");
+            removePlanetEvents = GUILayout.Toggle(removePlanetEvents, " Remove Planet Events");
+            removeRepeatEvents = GUILayout.Toggle(removeRepeatEvents, " Remove Repeat Events");
             removeTracks = GUILayout.Toggle(removeTracks, " Remove Tracks");
-
-            GUILayout.EndHorizontal();
 
             if (removeTracks)
             {
@@ -49,8 +54,26 @@ namespace EnhancedEffectRemover
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(30);
-                removeTrackAnimations = GUILayout.Toggle(removeTrackAnimations, " Remove Track Animations");
+                removeTrackEvents = GUILayout.Toggle(removeTrackEvents, " Remove Track Events");
                 GUILayout.EndHorizontal();
+
+                if (removeTrackEvents)
+                {
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(60);
+                    removeTrackAnimations = GUILayout.Toggle(removeTrackAnimations, " Remove Animate Track");
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(60);
+                    removeTrackMove = GUILayout.Toggle(removeTrackMove, " Remove Move Track");
+                    GUILayout.EndHorizontal();
+                    
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(60);
+                    removeTrackPos = GUILayout.Toggle(removeTrackPos, " Remove Position Track");
+                    GUILayout.EndHorizontal();
+                }
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(30);
@@ -60,7 +83,7 @@ namespace EnhancedEffectRemover
                 GUILayout.EndVertical();
             }
 
-            if (removeCameras || (removeTrackAnimations && removeTracks) || (removeTrackColors && removeTracks))
+            if (removeCameras || (removeTracks && removeTrackEvents && removeTrackAnimations) || (removeTrackColors && removeTracks))
             {
                 GUILayout.BeginVertical();
                 GUILayout.Space(20);
@@ -92,13 +115,20 @@ namespace EnhancedEffectRemover
                     }
                 }
 
-                if (removeTrackAnimations) setTrackAnimationtoDefault = GUILayout.Toggle(setTrackAnimationtoDefault, " Set Track Animation to Default");
+                if (removeTracks && removeTrackEvents && removeTrackAnimations) setTrackAnimationtoDefault = GUILayout.Toggle(setTrackAnimationtoDefault, " Set Track Animation to Default");
                 if (removeTrackColors) setTrackColortoDefault = GUILayout.Toggle(setTrackColortoDefault, " Set Track Color to Default");
 
                 GUILayout.EndVertical();
             }
-        }
 
+            GUILayout.Space(10);
+            GUILayout.Label("DLC Settings");
+
+            removeHoldSounds = GUILayout.Toggle(removeHoldSounds, " Remove HoldSounds");
+            removeHideIcons = GUILayout.Toggle(removeHideIcons, " Remove HideIcons");
+
+            GUILayout.EndVertical();
+        }
         public void Load()
         {
             if (File.Exists(Main.settingsPath))

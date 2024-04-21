@@ -11,7 +11,7 @@ namespace EnhancedEffectRemover
         public static UnityModManager.ModEntry.ModLogger Logger;
         public static Harmony harmony;
 
-        public static Settings settings = new Settings();
+        public static Settings settings = new();
 
         public static string settingsPath;
         public static void StartUp(UnityModManager.ModEntry modEntry)
@@ -25,7 +25,6 @@ namespace EnhancedEffectRemover
             modEntry.OnGUI = OnGUI;
             modEntry.OnSaveGUI = OnSaveGUI;
         }
-
         private static bool OnToggle(UnityModManager.ModEntry modEntry, bool isToggled)
         {
             if (isToggled)
@@ -40,7 +39,6 @@ namespace EnhancedEffectRemover
 
             return true;
         }
-
         private static void OnGUI(UnityModManager.ModEntry modEntry) => settings.LoadGUI();
         private static void OnSaveGUI(UnityModManager.ModEntry modEntry) => settings.Save();
     }
