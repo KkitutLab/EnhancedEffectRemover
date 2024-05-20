@@ -139,8 +139,6 @@ namespace EnhancedEffectRemover
                 {
                     LevelEventType[] typesToRemove =
                     {
-                        LevelEventType.AnimateTrack,
-                        LevelEventType.PositionTrack,
                         LevelEventType.MoveTrack,
                     };
 
