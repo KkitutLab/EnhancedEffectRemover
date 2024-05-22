@@ -1,21 +1,20 @@
 ﻿using System;
 using ADOFAI;
 
-
 namespace EnhancedEffectRemover
 {
     public class Remover
     {
         public static void Remove(LevelData __instance)
         {
-            if (Main.settings.removeDecos)
+            if (Main.settings.Decorations)
             {
                 __instance.decorations.Clear();
                 __instance.decorationSettings.data.Clear();
             }
-            if (Main.settings.removeFilters)
+            if (Main.settings.Filters)
             {
-                if (Main.settings.removeDecos)
+                if (Main.settings.Decorations)
                 {
                     LevelEventType[] typesToRemove =
                     {
@@ -53,7 +52,7 @@ namespace EnhancedEffectRemover
                 }
 
             }
-            if (Main.settings.removeBackgrounds)
+            if (Main.settings.Backgrounds)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -64,7 +63,7 @@ namespace EnhancedEffectRemover
                 __instance.backgroundSettings = new LevelEvent(0, LevelEventType.BackgroundSettings, GCS.settingsInfo["BackgroundSettings"]);
                 __instance.miscSettings["bgVideo"] = "";
             }
-            if (Main.settings.removeCameras)
+            if (Main.settings.Cameras)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -73,15 +72,15 @@ namespace EnhancedEffectRemover
 
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
 
-                if (Main.settings.setCamera)
+                if (Main.settings.SetCameraZoomScale)
                 {
-                    float zoom = Main.settings.zoomScale;
+                    float zoom = Main.settings.CameraZoomScale;
 
                     __instance.cameraSettings = new LevelEvent(0, LevelEventType.CameraSettings, GCS.settingsInfo["CameraSettings"]);
                     __instance.cameraSettings["zoom"] = zoom;
                 }
             }
-            if (Main.settings.removePlanetEvents)
+            if (Main.settings.PlanetEvents)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -92,7 +91,7 @@ namespace EnhancedEffectRemover
 
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
             }
-            if (Main.settings.removeRepeatEvents)
+            if (Main.settings.RepeatEvents)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -101,51 +100,55 @@ namespace EnhancedEffectRemover
 
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
             }
-            if (Main.settings.removeTracks && Main.settings.removeTrackColors && Main.settings.removeTrackEvents && Main.settings.removeTrackPos && Main.settings.removeTrackMove)
+            if (Main.settings.FrameRate)
+            {
+                LevelEventType[] typesToRemove =
+                {
+                    LevelEventType.SetFrameRate
+                };
+
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
+            }
+            if (Main.settings.TrackColors && Main.settings.TrackPos && Main.settings.TrackMove)
             {
                 __instance.trackSettings = new LevelEvent(0, LevelEventType.TrackSettings, GCS.settingsInfo["TrackSettings"]);
             }
-            if (Main.settings.removeTracks && Main.settings.removeTrackEvents)
+            if (Main.settings.TrackAnimations)
             {
-                if (Main.settings.removeTrackAnimations)
+                LevelEventType[] typesToRemove =
                 {
-                    LevelEventType[] typesToRemove =
-                    {
                         LevelEventType.AnimateTrack,
                     };
 
-                    __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
 
-                    if (Main.settings.setTrackAnimationtoDefault)
-                    {
-                        __instance.trackSettings["trackAppearAnimation"] = TrackAnimationType.Fade;
-                        __instance.trackSettings["trackDisappearAnimation"] = TrackAnimationType.Fade;
-                        __instance.trackSettings["beatsAhead"] = (float)8;
-                        __instance.trackSettings["beatsBehind"] = (float)0;
-                    }
-                }
-
-                if (Main.settings.removeTrackPos)
+                if (Main.settings.SetTrackAnimationToDefault)
                 {
-                    LevelEventType[] typesToRemove =
-                    {
+                    __instance.trackSettings["trackAppearAnimation"] = TrackAnimationType.Fade;
+                    __instance.trackSettings["trackDisappearAnimation"] = TrackAnimationType.Fade;
+                    __instance.trackSettings["beatsAhead"] = (float)8;
+                    __instance.trackSettings["beatsBehind"] = (float)0;
+                }
+            }
+            if (Main.settings.TrackPos)
+            {
+                LevelEventType[] typesToRemove =
+                {
                         LevelEventType.PositionTrack,
                     };
 
-                    __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
-                }
-                
-                if (Main.settings.removeTrackMove)
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
+            }
+            if (Main.settings.TrackMove)
+            {
+                LevelEventType[] typesToRemove =
                 {
-                    LevelEventType[] typesToRemove =
-                    {
                         LevelEventType.MoveTrack,
                     };
 
-                    __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
-                }
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
             }
-            if (Main.settings.removeTracks && Main.settings.removeTrackColors)
+            if (Main.settings.TrackColors)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -181,14 +184,14 @@ namespace EnhancedEffectRemover
                 }
 
 
-                if (Main.settings.setTrackColortoDefault)
+                if (Main.settings.SetTrackColorToDefault)
                 {
                     __instance.trackSettings["trackStyle"] = TrackStyle.Standard;
                     __instance.trackSettings["trackColor"] = "debb7bff";
                     __instance.trackSettings["trackColorType"] = TrackColorType.Single;
                 }
             }
-            if (Main.settings.removeHoldSounds)
+            if (Main.settings.HoldSounds)
             {
                 LevelEventType[] typesToRemove =
                 {
@@ -196,7 +199,7 @@ namespace EnhancedEffectRemover
                 };
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
             }
-            if (Main.settings.removeHideIcons)
+            if (Main.settings.HideIcons)
             {
                 LevelEventType[] typesToRemove =
                 {

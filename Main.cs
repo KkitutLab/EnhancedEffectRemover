@@ -3,7 +3,6 @@ using UnityModManagerNet;
 using System.Reflection;
 using System.IO;
 
-
 namespace EnhancedEffectRemover
 {
     public class Main
@@ -12,13 +11,11 @@ namespace EnhancedEffectRemover
         public static Harmony harmony;
 
         public static Settings settings = new();
-
-        public static string settingsPath;
         public static void StartUp(UnityModManager.ModEntry modEntry)
         {
             Logger = modEntry.Logger;
 
-            settingsPath = Path.Combine(modEntry.Path, "Settings.json");
+            settings.setiingFilePath = Path.Combine(modEntry.Path, "Settings.json");
             settings.Load();
 
             modEntry.OnToggle = OnToggle;
@@ -29,7 +26,7 @@ namespace EnhancedEffectRemover
         {
             if (isToggled)
             {
-                harmony = new Harmony(modEntry.Info.Id);
+                Harmony harmony = new(modEntry.Info.Id);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
             }
             else
