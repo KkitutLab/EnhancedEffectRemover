@@ -80,13 +80,29 @@ namespace EnhancedEffectRemover
                     __instance.cameraSettings["zoom"] = zoom;
                 }
             }
-            if (Main.settings.PlanetEvents)
+            if (Main.settings.PlanetOrbit)
             {
                 LevelEventType[] typesToRemove =
                 {
                     LevelEventType.SetPlanetRotation,
-                    LevelEventType.ScaleRadius,
+                };
+
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
+            }
+            if (Main.settings.PlanetScale)
+            {
+                LevelEventType[] typesToRemove =
+                {
                     LevelEventType.ScalePlanets,
+                };
+
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
+            }
+            if (Main.settings.PlanetRadius)
+            {
+                LevelEventType[] typesToRemove =
+                {
+                    LevelEventType.ScaleRadius
                 };
 
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
@@ -109,7 +125,16 @@ namespace EnhancedEffectRemover
 
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
             }
-            if (Main.settings.TrackColors && Main.settings.TrackPos && Main.settings.TrackMove)
+            if (Main.settings.HitSounds)
+            {
+                LevelEventType[] typesToRemove =
+                {
+                    LevelEventType.PlaySound,
+                    LevelEventType.SetHitsound,
+                };
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
+            }
+            if (Main.settings.TrackAnimations && Main.settings.TrackPos && Main.settings.TrackMove && Main.settings.TrackColors)
             {
                 __instance.trackSettings = new LevelEvent(0, LevelEventType.TrackSettings, GCS.settingsInfo["TrackSettings"]);
             }
@@ -126,8 +151,8 @@ namespace EnhancedEffectRemover
                 {
                     __instance.trackSettings["trackAppearAnimation"] = TrackAnimationType.Fade;
                     __instance.trackSettings["trackDisappearAnimation"] = TrackAnimationType.Fade;
-                    __instance.trackSettings["beatsAhead"] = (float)8;
-                    __instance.trackSettings["beatsBehind"] = (float)0;
+                    __instance.trackSettings["beatsAhead"] = 8.0f;
+                    __instance.trackSettings["beatsBehind"] = 0.0f;
                 }
             }
             if (Main.settings.TrackPos)
@@ -204,6 +229,14 @@ namespace EnhancedEffectRemover
                 LevelEventType[] typesToRemove =
                 {
                     LevelEventType.Hide
+                };
+                __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
+            }
+            if (Main.settings.CheckPoints)
+            {
+                LevelEventType[] typesToRemove =
+                {
+                    LevelEventType.Checkpoint
                 };
                 __instance.levelEvents.RemoveAll(data => Array.IndexOf(typesToRemove, data.eventType) != -1);
             }

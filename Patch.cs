@@ -3,10 +3,9 @@ using ADOFAI.Editor.Actions;
 using HarmonyLib;
 
 namespace EnhancedEffectRemover
-{ 
+{
     public class RemoveEffects
     {
-
         [HarmonyPatch(typeof(LevelData), "Decode")]
         class LevelDecodePatch
         {
@@ -26,11 +25,13 @@ namespace EnhancedEffectRemover
         }
 
         [HarmonyPatch(typeof(scnEditor), "LoadGameScene")]
-
         class SaveOnLoad
         {
-            static void Postfix()
+            static void Postfix(scnEditor __instance)
             {
+                __instance.popupUnsavedChangesSave.interactable = false;
+                __instance.buttonSave.interactable = false;
+
                 Main.settings.Save();
             }
         }
