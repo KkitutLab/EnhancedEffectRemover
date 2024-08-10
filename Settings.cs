@@ -55,12 +55,14 @@ namespace EnhancedEffectRemover
             GUILayout.Label("Non-DLC Settings");
             GUILayout.EndHorizontal();
 
+            GUILayout.Label(Persistence.language.ToString());
+
             Filters = GUILayout.Toggle(Filters, "  Filter");
             Decorations = GUILayout.Toggle(Decorations, "  Decoration");
             Backgrounds = GUILayout.Toggle(Backgrounds, "  Background");
             Cameras = GUILayout.Toggle(Cameras, "  Camera");
             RepeatEvents = GUILayout.Toggle(RepeatEvents, "  Repeat Event");
-            FrameRate = GUILayout.Toggle(FrameRate, "  Framerate");
+            FrameRate = GUILayout.Toggle(FrameRate, "  Frame Rate");
             HitSounds = GUILayout.Toggle(HitSounds, "  HitSound");
 
             int planetSettingCount = (PlanetOrbit ? 1 : 0) + (PlanetScale ? 1 : 0) + (PlanetRadius ? 1 : 0);
