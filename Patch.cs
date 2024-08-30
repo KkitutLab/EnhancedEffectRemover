@@ -1,6 +1,7 @@
 ﻿using ADOFAI;
 using ADOFAI.Editor.Actions;
 using HarmonyLib;
+using UnityEngine.SceneManagement;
 
 namespace EnhancedEffectRemover
 {
@@ -12,6 +13,7 @@ namespace EnhancedEffectRemover
             static void Postfix(LevelData __instance)
             {
                 Remover.Remove(__instance);
+                Settings.Instance.Save();
             }
         }
 
@@ -20,7 +22,7 @@ namespace EnhancedEffectRemover
         {
             static bool Prefix()
             {
-                return false;
+                return Settings.Instance.EnableSave;
             }
         }
 
@@ -29,11 +31,17 @@ namespace EnhancedEffectRemover
         {
             static void Postfix(scnEditor __instance)
             {
-                __instance.popupUnsavedChangesSave.interactable = false;
-                __instance.buttonSave.interactable = false;
-
+                ToggleSave(__instance, Settings.Instance.EnableSave);
                 Settings.Instance.Save();
             }
+        }
+
+        public static void ToggleSave(scnEditor __instance, bool isSaveEnabled)
+        {
+            if (SceneManager.GetActiveScene().name != "scnEditor") return;
+
+            __instance.popupUnsavedChangesSave.interactable = isSaveEnabled;
+            __instance.buttonSave.interactable = isSaveEnabled;
         }
     }
 }

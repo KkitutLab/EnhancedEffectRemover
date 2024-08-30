@@ -7,13 +7,21 @@ namespace EnhancedEffectRemover
         private static Settings Settings => Settings.Instance;
         public static void LoadGUI()
         {
-            GUI.skin.Label
             GUILayout.BeginVertical();
             GUILayout.Space(10);
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
-            GUILayout.Label("<color=#" + (Settings.EnableSave ? "00ff00" : "ff0000") +  "><size=125%>Save is Off</size></color>");
+            GUILayout.Label("<color=#" + (Settings.EnableSave ? "00ff00" : "ff0000") +  ">Save is " + (Settings.EnableSave ? "On" : "Off") + "</color>");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(10);
+            if (GUILayout.Button("Toggle Save", GUILayout.Width(150), GUILayout.Height(50)))
+            {
+               Settings.EnableSave = !Settings.EnableSave;
+               Patcher.ToggleSave(scnEditor.instance, Settings.EnableSave);
+            }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
@@ -22,12 +30,15 @@ namespace EnhancedEffectRemover
             GUILayout.EndHorizontal();
 
             Settings.Filters = GUILayout.Toggle(Settings.Filters, "  Filter");
+            Settings.AdvFilters = GUILayout.Toggle(Settings.AdvFilters, "  Advanced Filter");
+            Settings.Particles = GUILayout.Toggle(Settings.Particles, "  Particles");
             Settings.Decorations = GUILayout.Toggle(Settings.Decorations, "  Decoration");
             Settings.Backgrounds = GUILayout.Toggle(Settings.Backgrounds, "  Background");
             Settings.Cameras = GUILayout.Toggle(Settings.Cameras, "  Camera");
             Settings.RepeatEvents = GUILayout.Toggle(Settings.RepeatEvents, "  Repeat Event");
             Settings.FrameRate = GUILayout.Toggle(Settings.FrameRate, "  Frame Rate");
             Settings.HitSounds = GUILayout.Toggle(Settings.HitSounds, "  HitSound");
+            Settings.CheckPoints = GUILayout.Toggle(Settings.CheckPoints, "  CheckPoints");
 
             int planetSettingCount = (Settings.PlanetOrbit ? 1 : 0) + (Settings.PlanetScale ? 1 : 0) + (Settings.PlanetRadius ? 1 : 0);
             Settings.PlanetPanel = GUILayout.Toggle(Settings.PlanetPanel, "  " + planetSettingCount + " Planet Events");
@@ -131,10 +142,10 @@ namespace EnhancedEffectRemover
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
-            GUILayout.Label("Others");
+            GUILayout.Label("Miscs");
             GUILayout.EndHorizontal();
 
-            Settings.CheckPoints = GUILayout.Toggle(Settings.CheckPoints, "  Remove CheckPoints");
+            Settings.ResetTrackOpacity = GUILayout.Toggle(Settings.ResetTrackOpacity, "  Reset all 'Track Opacity' value to 100%");
             if (Settings.Cameras)
             {
                 Settings.SetCameraZoomScale = GUILayout.Toggle(Settings.SetCameraZoomScale, "  Set Camera Zoom (100 ~ 1000) ");
@@ -156,8 +167,7 @@ namespace EnhancedEffectRemover
             }
             if (Settings.TrackAnimations) Settings.SetTrackAnimationToDefault = GUILayout.Toggle(Settings.SetTrackAnimationToDefault, "  Set Track Animation to Default");
             if (Settings.TrackColors) Settings.SetTrackColorToDefault = GUILayout.Toggle(Settings.SetTrackColorToDefault, "  Set Track Color to Default");
-            if (Settings.TrackMove) //ResetTrackOpacity = GUILayout.Toggle();
-
+            
             GUILayout.Space(10);
             GUILayout.EndVertical();
         }

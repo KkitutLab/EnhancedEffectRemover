@@ -6,7 +6,7 @@ namespace EnhancedEffectRemover
 {
     public static class FilterRemover
     {
-        public static void Remove(List<LevelEventType> events)
+        public static void RemoveFilter(List<LevelEventType> events)
         {
             events.AddRange(new List<LevelEventType>
             {
@@ -16,7 +16,15 @@ namespace EnhancedEffectRemover
                 LevelEventType.ShakeScreen,
                 LevelEventType.Bloom,
                 LevelEventType.ScreenTile,
-                LevelEventType.ScreenScroll,
+                LevelEventType.ScreenScroll
+            });
+        }
+
+        public static void RemoveAdvFilter(List<LevelEventType> events)
+        {
+            events.AddRange(new List<LevelEventType>
+            {
+                LevelEventType.SetFilterAdvanced
             });
         }
     }

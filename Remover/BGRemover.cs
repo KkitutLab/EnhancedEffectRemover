@@ -6,15 +6,15 @@ namespace EnhancedEffectRemover
 {
     public static class BGRemover
     {
-        public static void Remove(List<LevelEventType> events, LevelData levelData)
+        public static void Remove(List<LevelEventType> events, LevelData __instance)
         {
             events.AddRange(new List<LevelEventType>
             {
                 LevelEventType.CustomBackground
             });
 
-            levelData.backgroundSettings = new LevelEvent(0, LevelEventType.BackgroundSettings, GCS.settingsInfo["BackgroundSettings"]);
-            levelData.miscSettings["bgVideo"] = "";
+            __instance.backgroundSettings = new LevelEvent(0, LevelEventType.BackgroundSettings, GCS.settingsInfo["BackgroundSettings"]);
+            __instance.miscSettings["bgVideo"] = "";
         }
     }
 }

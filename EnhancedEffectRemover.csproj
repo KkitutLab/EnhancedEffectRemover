@@ -42,6 +42,7 @@
     <Compile Include="Remover\FilterRemover.cs" />
     <Compile Include="Remover\HideRemover.cs" />
     <Compile Include="Remover\Misc.cs" />
+    <Compile Include="Remover\ParticleRemover.cs" />
     <Compile Include="Remover\PlanetEventRemover.cs" />
     <Compile Include="Remover\Remover.cs" />
     <Compile Include="Remover\RepeatEvents.cs" />
@@ -57,7 +58,7 @@
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Program Files\Games\SteamLibrary\steamapps\common\A Dance of Fire and Ice\A Dance of Fire and Ice_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>E:\Program Files\Games\steamapps\common\A Dance of Fire and Ice\A Dance of Fire and Ice_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -29,8 +29,11 @@ namespace EnhancedEffectRemover
         public bool SetTrackAnimationToDefault { get; set; }
         public bool SetTrackColorToDefault { get; set; }
         public bool SetCameraZoomScale { get; set; }
+        public bool ResetTrackOpacity { get; set; }
         public bool CheckPoints { get; set; }
         public bool Filters { get; set; }
+        public bool AdvFilters { get; set; }
+        public bool Particles { get; set; }
         public bool Decorations { get; set; }
         public bool Backgrounds { get; set; }
         public bool Cameras { get; set; }
@@ -55,16 +58,25 @@ namespace EnhancedEffectRemover
             {
                 try
                 {
-                    JsonConvert.PopulateObject(File.ReadAllText(Main.filePath), this);
-                } catch (Exception e)
+                    var settings = new JsonSerializerSettings
+                    {
+                        MissingMemberHandling = MissingMemberHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    };
+
+                    JsonConvert.PopulateObject(File.ReadAllText(Main.filePath), this, settings);
+                }
+                catch (Exception e)
                 {
                     Main.Logger.Error(e.Message);
                 }
-            } else
+            }
+            else
             {
                 Save();
             }
         }
+
         public void Save()
         {
             try

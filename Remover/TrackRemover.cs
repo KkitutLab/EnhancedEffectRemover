@@ -6,7 +6,7 @@ namespace EnhancedEffectRemover
 {
     public static class TrackRemover
     {
-        public static void RemoveTrackAnimations(List<LevelEventType> events, LevelData levelData, Settings Settings)
+        public static void RemoveTrackAnimations(List<LevelEventType> events, LevelData __instance, Settings Settings)
         {
             events.AddRange(new List<LevelEventType>
             {
@@ -15,7 +15,10 @@ namespace EnhancedEffectRemover
 
             if (Settings.SetTrackAnimationToDefault)
             {
-                levelData.trackSettings = new LevelEvent(0, LevelEventType.TrackSettings, GCS.settingsInfo["TrackSettings"]);
+                __instance.trackSettings["trackAppearAnimation"] = TrackAnimationType.Fade;
+                __instance.trackSettings["trackDisappearAnimation"] = TrackAnimationType.Fade;
+                __instance.trackSettings["beatsAhead"] = 8.0f;
+                __instance.trackSettings["beatsBehind"] = 0.0f;
             }
         }
 
@@ -35,13 +38,20 @@ namespace EnhancedEffectRemover
             });
         }
 
-        public static void RemoveTrackColors(List<LevelEventType> events)
+        public static void RemoveTrackColors(List<LevelEventType> events, LevelData __instance, Settings Settings)
         {
             events.AddRange(new List<LevelEventType>
             {
                 LevelEventType.ColorTrack,
                 LevelEventType.RecolorTrack
             });
+
+            if (Settings.SetTrackColorToDefault)
+            {
+                __instance.trackSettings["trackStyle"] = TrackStyle.Standard;
+                __instance.trackSettings["trackColor"] = "debb7bff";
+                __instance.trackSettings["trackColorType"] = TrackColorType.Single;
+            }
         }
     }
 }

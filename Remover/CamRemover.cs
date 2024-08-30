@@ -6,7 +6,7 @@ namespace EnhancedEffectRemover
 {
     public static class CamRemover
     {
-        public static void Remove(List<LevelEventType> events, LevelData levelData, Settings Settings)
+        public static void Remove(List<LevelEventType> events, LevelData __instance, Settings Settings)
         {
             events.AddRange(new List<LevelEventType> 
             {
@@ -17,8 +17,8 @@ namespace EnhancedEffectRemover
             {
                 float zoom = Settings.CameraZoomScale;
 
-                levelData.cameraSettings = new LevelEvent(0, LevelEventType.CameraSettings, GCS.settingsInfo["CameraSettings"]);
-                levelData.cameraSettings["zoom"] = zoom;
+                __instance.cameraSettings = new LevelEvent(0, LevelEventType.CameraSettings, GCS.settingsInfo["CameraSettings"]);
+                __instance.cameraSettings["zoom"] = zoom;
             }
         }
     }
