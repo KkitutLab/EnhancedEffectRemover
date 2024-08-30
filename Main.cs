@@ -5,19 +5,17 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 namespace EnhancedEffectRemover
-{
+{ 
     public class Main
     {
         public static UnityModManager.ModEntry.ModLogger Logger;
-
-        public static Settings settings = new();
         public static string filePath;
         public static void StartUp(UnityModManager.ModEntry modEntry)
         {
             Logger = modEntry.Logger;
 
             filePath = Path.Combine(modEntry.Path, "Settings.json");
-            settings.Load();
+            Settings.Instance.Load();
 
             modEntry.OnToggle = OnToggle;
             modEntry.OnGUI = OnGUI;
@@ -37,13 +35,13 @@ namespace EnhancedEffectRemover
 
                 if (SceneManager.GetActiveScene().name == "scnEditor")
                 {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    SceneManager.LoadScene("scnEditor");
                 }
             }
 
             return true;
         }
-        private static void OnGUI(UnityModManager.ModEntry modEntry) => settings.LoadGUI();
-        private static void OnSaveGUI(UnityModManager.ModEntry modEntry) => settings.Save();
+        private static void OnGUI(UnityModManager.ModEntry modEntry) => GUI.LoadGUI();
+        private static void OnSaveGUI(UnityModManager.ModEntry modEntry) => Settings.Instance.Save();
     }
 }

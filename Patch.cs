@@ -4,7 +4,7 @@ using HarmonyLib;
 
 namespace EnhancedEffectRemover
 {
-    public class RemoveEffects
+    public class Patcher
     {
         [HarmonyPatch(typeof(LevelData), "Decode")]
         class LevelDecodePatch
@@ -32,7 +32,7 @@ namespace EnhancedEffectRemover
                 __instance.popupUnsavedChangesSave.interactable = false;
                 __instance.buttonSave.interactable = false;
 
-                Main.settings.Save();
+                Settings.Instance.Save();
             }
         }
     }
