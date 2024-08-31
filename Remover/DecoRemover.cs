@@ -1,7 +1,7 @@
 ﻿using ADOFAI;
 using System.Collections.Generic;
 
-namespace EnhancedEffectRemover
+namespace EnhancedEffectRemover.Remover
 {
     public class DecoRemover
     {

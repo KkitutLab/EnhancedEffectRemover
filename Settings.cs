@@ -26,10 +26,10 @@ namespace EnhancedEffectRemover
                     _cameraZoomScale = value;
             }
         }
-        public bool SetTrackAnimationToDefault { get; set; }
-        public bool SetTrackColorToDefault { get; set; }
-        public bool SetCameraZoomScale { get; set; }
+        public bool ResetTrackAnimation { get; set; }
+        public bool ResetTrackColor { get; set; }
         public bool ResetTrackOpacity { get; set; }
+        public bool SetCameraZoomScale { get; set; }
         public bool CheckPoints { get; set; }
         public bool Filters { get; set; }
         public bool AdvFilters { get; set; }

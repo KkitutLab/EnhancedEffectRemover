@@ -41,7 +41,7 @@ namespace EnhancedEffectRemover
 
             return true;
         }
-        private static void OnGUI(UnityModManager.ModEntry modEntry) => GUI.LoadGUI();
+        private static void OnGUI(UnityModManager.ModEntry modEntry) => GUI.Main.LoadGUI();
         private static void OnSaveGUI(UnityModManager.ModEntry modEntry) => Settings.Instance.Save();
     }
 }

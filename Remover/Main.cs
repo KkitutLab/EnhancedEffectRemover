@@ -1,9 +1,9 @@
 ﻿using ADOFAI;
 using System.Collections.Generic;
 
-namespace EnhancedEffectRemover
+namespace EnhancedEffectRemover.Remover
 {
-    public class Remover
+    public class Main
     {
         private static Settings Settings => Settings.Instance;
         public static void Remove(LevelData __instance)

@@ -1,8 +1,7 @@
 ﻿using ADOFAI;
-using System;
 using System.Collections.Generic;
 
-namespace EnhancedEffectRemover
+namespace EnhancedEffectRemover.Remover
 {
     public class Misc
     {
@@ -18,28 +17,29 @@ namespace EnhancedEffectRemover
         {
             foreach (var eventData in __instance.levelEvents)
             {
-                if (eventData.eventType == LevelEventType.MoveTrack)
+                if (eventData.eventType == LevelEventType.MoveTrack || eventData.eventType == LevelEventType.PositionTrack)
                 {
                     if (eventData.data.ContainsKey("opacity"))
                     {
-                        if (Convert.ToSingle(eventData.data["opacity"]) > 100.0f)
-                        {
-                            eventData.data["opacity"] = 100.0f;
-                        }
-                    }
-                }
-
-                if (eventData.eventType == LevelEventType.PositionTrack)
-                {
-                    if (eventData.data.ContainsKey("opacity"))
-                    {
-                        if (Convert.ToSingle(eventData.data["opacity"]) > 100.0f)
-                        {
-                            eventData.data["opacity"] = 100.0f;
-                        }
+                        eventData.data["opacity"] = 100.0f;
                     }
                 }
             }
+        }
+
+        public static void ResetTrackAnimations(LevelData __instance)
+        { 
+            __instance.trackSettings["trackAppearAnimation"] = TrackAnimationType.Fade;
+            __instance.trackSettings["trackDisappearAnimation"] = TrackAnimationType.Fade;
+            __instance.trackSettings["beatsAhead"] = 8.0f;
+            __instance.trackSettings["beatsBehind"] = 0.0f;
+        }
+
+        public static void ResetTrackColor(LevelData __instance)
+        {
+            __instance.trackSettings["trackStyle"] = TrackStyle.Standard;
+            __instance.trackSettings["trackColor"] = "debb7bff";
+            __instance.trackSettings["trackColorType"] = TrackColorType.Single;
         }
     }
 }

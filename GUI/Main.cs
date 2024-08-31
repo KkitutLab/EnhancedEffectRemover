@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace EnhancedEffectRemover
+namespace EnhancedEffectRemover.GUI
 {
-    public class GUI : MonoBehaviour
+    public class Main : MonoBehaviour
     {
         private static Settings Settings => Settings.Instance;
         public static void LoadGUI()
@@ -38,7 +38,7 @@ namespace EnhancedEffectRemover
             Settings.RepeatEvents = GUILayout.Toggle(Settings.RepeatEvents, "  Repeat Event");
             Settings.FrameRate = GUILayout.Toggle(Settings.FrameRate, "  Frame Rate");
             Settings.HitSounds = GUILayout.Toggle(Settings.HitSounds, "  HitSound");
-            Settings.CheckPoints = GUILayout.Toggle(Settings.CheckPoints, "  CheckPoints");
+            Settings.CheckPoints = GUILayout.Toggle(Settings.CheckPoints, "  CheckPoint");
 
             int planetSettingCount = (Settings.PlanetOrbit ? 1 : 0) + (Settings.PlanetScale ? 1 : 0) + (Settings.PlanetRadius ? 1 : 0);
             Settings.PlanetPanel = GUILayout.Toggle(Settings.PlanetPanel, "  " + planetSettingCount + " Planet Events");
@@ -165,8 +165,8 @@ namespace EnhancedEffectRemover
                     GUILayout.EndHorizontal();
                 }
             }
-            if (Settings.TrackAnimations) Settings.SetTrackAnimationToDefault = GUILayout.Toggle(Settings.SetTrackAnimationToDefault, "  Set Track Animation to Default");
-            if (Settings.TrackColors) Settings.SetTrackColorToDefault = GUILayout.Toggle(Settings.SetTrackColorToDefault, "  Set Track Color to Default");
+            if (Settings.TrackAnimations) Settings.ResetTrackAnimation = GUILayout.Toggle(Settings.ResetTrackAnimation, "  Set Track Animation to Default");
+            if (Settings.TrackColors) Settings.ResetTrackColor = GUILayout.Toggle(Settings.ResetTrackColor, "  Set Track Color to Default");
             
             GUILayout.Space(10);
             GUILayout.EndVertical();

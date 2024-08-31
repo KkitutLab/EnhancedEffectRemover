@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EnhancedEffectRemover
+namespace EnhancedEffectRemover.Remover
 {
     public static class PlanetEventRemover
     {

@@ -12,7 +12,7 @@ namespace EnhancedEffectRemover
         {
             static void Postfix(LevelData __instance)
             {
-                Remover.Remove(__instance);
+                Remover.Main.Remove(__instance);
                 Settings.Instance.Save();
             }
         }

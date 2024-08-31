@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EnhancedEffectRemover
+namespace EnhancedEffectRemover.Remover
 {
     public static class TrackRemover
     {
@@ -13,12 +13,9 @@ namespace EnhancedEffectRemover
                 LevelEventType.AnimateTrack
             });
 
-            if (Settings.SetTrackAnimationToDefault)
+            if (Settings.ResetTrackAnimation)
             {
-                __instance.trackSettings["trackAppearAnimation"] = TrackAnimationType.Fade;
-                __instance.trackSettings["trackDisappearAnimation"] = TrackAnimationType.Fade;
-                __instance.trackSettings["beatsAhead"] = 8.0f;
-                __instance.trackSettings["beatsBehind"] = 0.0f;
+                Misc.ResetTrackAnimations(__instance);
             }
         }
 
@@ -46,11 +43,9 @@ namespace EnhancedEffectRemover
                 LevelEventType.RecolorTrack
             });
 
-            if (Settings.SetTrackColorToDefault)
+            if (Settings.ResetTrackColor)
             {
-                __instance.trackSettings["trackStyle"] = TrackStyle.Standard;
-                __instance.trackSettings["trackColor"] = "debb7bff";
-                __instance.trackSettings["trackColorType"] = TrackColorType.Single;
+                Misc.ResetTrackColor(__instance);
             }
         }
     }

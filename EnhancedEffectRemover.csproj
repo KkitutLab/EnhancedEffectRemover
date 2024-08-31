@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GUI\GUI.cs" />
+    <Compile Include="GUI\Main.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -44,7 +44,7 @@
     <Compile Include="Remover\Misc.cs" />
     <Compile Include="Remover\ParticleRemover.cs" />
     <Compile Include="Remover\PlanetEventRemover.cs" />
-    <Compile Include="Remover\Remover.cs" />
+    <Compile Include="Remover\Main.cs" />
     <Compile Include="Remover\RepeatEvents.cs" />
     <Compile Include="Remover\RepeatRemover.cs" />
     <Compile Include="Remover\SoundRemover.cs" />
