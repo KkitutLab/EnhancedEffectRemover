@@ -19,9 +19,9 @@ namespace EnhancedEffectRemover.Remover
             {
                 if (eventData.eventType == LevelEventType.MoveTrack || eventData.eventType == LevelEventType.PositionTrack)
                 {
-                    if (eventData.data.ContainsKey("opacity"))
+                    if (eventData.ContainsKey("opacity"))
                     {
-                        eventData.data["opacity"] = 100.0f;
+                        eventData["opacity"] = 100.0f;
                     }
                 }
             }

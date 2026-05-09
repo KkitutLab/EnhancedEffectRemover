@@ -28,6 +28,7 @@ namespace EnhancedEffectRemover
         }
         public bool ResetTrackAnimation { get; set; }
         public bool ResetTrackColor { get; set; }
+        public bool RemoveAllDecorations { get; set; }
         public bool ResetTrackOpacity { get; set; }
         public bool SetCameraZoomScale { get; set; }
         public bool CheckPoints { get; set; }

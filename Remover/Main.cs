@@ -10,7 +10,7 @@ namespace EnhancedEffectRemover.Remover
         {
             List<LevelEventType> events = new();
 
-            if (Settings.Decorations) DecoRemover.Remove(events, __instance);
+            if (Settings.Decorations) DecoRemover.Remove(events, __instance, Settings);
             if (Settings.Filters) FilterRemover.RemoveFilter(events);
             if (Settings.AdvFilters) FilterRemover.RemoveAdvFilter(events);
             if (Settings.Particles) ParticleRemover.Remove(events);

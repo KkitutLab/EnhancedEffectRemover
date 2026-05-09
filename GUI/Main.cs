@@ -145,6 +145,7 @@ namespace EnhancedEffectRemover.GUI
             GUILayout.Label("Miscs");
             GUILayout.EndHorizontal();
 
+            if (Settings.Decorations) Settings.RemoveAllDecorations = GUILayout.Toggle(Settings.RemoveAllDecorations, "  Remove all decorations");
             Settings.ResetTrackOpacity = GUILayout.Toggle(Settings.ResetTrackOpacity, "  Reset all 'Track Opacity' value to 100%");
             if (Settings.Cameras)
             {
