@@ -17,6 +17,9 @@
         <O5KitProject Condition="'$(O5KitProject)' == ''">../../O5Kit/src/O5Kit/O5Kit.csproj</O5KitProject>
         <O5KitConfiguration Condition="$(Configuration.Contains('Debug'))">Debug_Mono</O5KitConfiguration>
         <O5KitConfiguration Condition="!$(Configuration.Contains('Debug'))">Release_Mono</O5KitConfiguration>
+        <NCalcVersion>7.0.2</NCalcVersion>
+        <ParlotVersion>1.5.8</ParlotVersion>
+        <ImmutableVersion>10.0.10</ImmutableVersion>
     </PropertyGroup>
 
     <ItemGroup Condition="Exists('$(O5KitProject)')">
@@ -30,6 +33,10 @@
         <Reference Include="O5Kit">
             <HintPath>$(GamePath)/UserLibs/O5Kit.dll</HintPath>
         </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ncalc" Version="7.0.2" />
     </ItemGroup>
 
     <ItemDefinitionGroup>
@@ -78,6 +85,16 @@
         <MakeDir Directories="$(GamePath)/Mods" Condition="'$(TargetPath)' != ''" />
         <Copy Condition="'$(TargetPath)' != ''" SourceFiles="$(TargetPath)" DestinationFolder="$(GamePath)/Mods" SkipUnchangedFiles="true" />
         <Copy SourceFiles="$(TargetDir)O5Kit.dll" DestinationFolder="$(GamePath)/UserLibs" SkipUnchangedFiles="true" Condition="Exists('$(TargetDir)O5Kit.dll')" />
+        <ItemGroup>
+            <O5KitDeps Include="$(NuGetPackageRoot)ncalc/$(NCalcVersion)/lib/netstandard2.0/NCalc.dll" />
+            <O5KitDeps Include="$(NuGetPackageRoot)ncalc.core/$(NCalcVersion)/lib/netstandard2.0/NCalc.Core.dll" />
+            <O5KitDeps Include="$(NuGetPackageRoot)ncalc.domain/$(NCalcVersion)/lib/netstandard2.0/NCalc.Domain.dll" />
+            <O5KitDeps Include="$(NuGetPackageRoot)ncalc.parser/$(NCalcVersion)/lib/netstandard2.0/NCalc.Parser.dll" />
+            <O5KitDeps Include="$(NuGetPackageRoot)parlot/$(ParlotVersion)/lib/netstandard2.0/Parlot.dll" />
+            <O5KitDeps Include="$(NuGetPackageRoot)system.collections.immutable/$(ImmutableVersion)/lib/netstandard2.0/System.Collections.Immutable.dll" />
+        </ItemGroup>
+        <MakeDir Directories="$(GamePath)/UserLibs" Condition="'@(O5KitDeps)' != ''" />
+        <Copy SourceFiles="@(O5KitDeps)" DestinationFolder="$(GamePath)/UserLibs" SkipUnchangedFiles="true" />
     </Target>
 
 </Project>
