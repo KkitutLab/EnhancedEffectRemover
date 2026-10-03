@@ -1,0 +1,32 @@
+root = true
+
+[*.cs]
+# ==========================================
+# 1. Brace placement - K&R core
+# ==========================================
+# Opening brace ({) stays on the same line for everything (classes, methods, control blocks, etc.)
+csharp_new_line_before_open_brace = none
+
+# ==========================================
+# 2. No line breaks around flow keywords (keep same-line chains)
+# ==========================================
+# Keep "} else {" shape (don't push else to the next line)
+csharp_new_line_before_else = false
+
+# Keep "} catch {" shape
+csharp_new_line_before_catch = false
+
+# Keep "} finally {" shape
+csharp_new_line_before_finally = false
+
+# ==========================================
+# 3. Newlines in initializers and query expressions
+# ==========================================
+# Don't force object initializer members { Name = "A", Age = 10 } onto separate lines
+csharp_new_line_before_members_in_object_initializers = false
+
+# Don't force anonymous type members onto separate lines
+csharp_new_line_before_members_in_anonymous_types = false
+
+# Don't force LINQ query clauses onto separate lines
+csharp_new_line_between_query_expression_clauses = false

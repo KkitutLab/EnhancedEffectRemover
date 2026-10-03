@@ -1,0 +1,13 @@
+<!-- Copy this file to Directory.Build.props and set your own paths. -->
+<Project>
+    <PropertyGroup>
+        <!--
+            Windows (Steam)
+            C:/Program Files (x86)/Steam/steamapps/common/A Dance of Fire and Ice
+            Linux (Steam)
+            ~/.local/share/Steam/steamapps/common/A Dance of Fire and Ice
+        -->
+        <GamePath>/path/to/A Dance of Fire and Ice</GamePath>
+        <GameData>ADanceOfFireAndIce_Data</GameData>
+    </PropertyGroup>
+</Project>

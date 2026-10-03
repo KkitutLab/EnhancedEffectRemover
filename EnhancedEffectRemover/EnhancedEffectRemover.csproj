@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <RootNamespace>EnhancedEffectRemover</RootNamespace>
+        <AssemblyName>EnhancedEffectRemover</AssemblyName>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <FileVersion>2.0.0.0</FileVersion>
+        <Version>2.0.0</Version>
+        <NeutralLanguage>en-US</NeutralLanguage>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <O5KitProject Condition="'$(O5KitProject)' == ''">../../O5Kit/src/O5Kit/O5Kit.csproj</O5KitProject>
+        <O5KitConfiguration Condition="$(Configuration.Contains('Debug'))">Debug_Mono</O5KitConfiguration>
+        <O5KitConfiguration Condition="!$(Configuration.Contains('Debug'))">Release_Mono</O5KitConfiguration>
+    </PropertyGroup>
+
+    <ItemGroup Condition="Exists('$(O5KitProject)')">
+        <ProjectReference Include="$(O5KitProject)">
+            <SetConfiguration>Configuration=$(O5KitConfiguration)</SetConfiguration>
+            <SetTargetFramework>TargetFramework=netstandard2.1</SetTargetFramework>
+        </ProjectReference>
+    </ItemGroup>
+
+    <ItemGroup Condition="!Exists('$(O5KitProject)')">
+        <Reference Include="O5Kit">
+            <HintPath>$(GamePath)/UserLibs/O5Kit.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemDefinitionGroup>
+        <Reference>
+            <Private>false</Private>
+        </Reference>
+    </ItemDefinitionGroup>
+
+    <ItemGroup>
+        <Reference Include="MelonLoader">
+            <HintPath>$(GamePath)/MelonLoader/net35/MelonLoader.dll</HintPath>
+        </Reference>
+        <Reference Include="0Harmony">
+            <HintPath>$(GamePath)/MelonLoader/net35/0Harmony.dll</HintPath>
+        </Reference>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(GamePath)/$(GameData)/Managed/Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="RDTools">
+            <HintPath>$(GamePath)/$(GameData)/Managed/RDTools.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json">
+            <HintPath>$(GamePath)/$(GameData)/Managed/Newtonsoft.Json.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.IMGUIModule">
+            <HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.IMGUIModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.InputLegacyModule">
+            <HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.InputLegacyModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.UI.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>$(GamePath)/$(GameData)/Managed/Unity.TextMeshPro.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="Build">
+        <MakeDir Directories="$(GamePath)/Mods" Condition="'$(TargetPath)' != ''" />
+        <Copy Condition="'$(TargetPath)' != ''" SourceFiles="$(TargetPath)" DestinationFolder="$(GamePath)/Mods" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(TargetDir)O5Kit.dll" DestinationFolder="$(GamePath)/UserLibs" SkipUnchangedFiles="true" Condition="Exists('$(TargetDir)O5Kit.dll')" />
+    </Target>
+
+</Project>
