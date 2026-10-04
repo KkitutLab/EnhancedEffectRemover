@@ -45,6 +45,11 @@ public sealed class Core : MelonMod {
             null,
             $"{nameof(SaveLevelEditorAction)}.{nameof(SaveLevelEditorAction.Execute)}");
         SafePatch.Apply(HarmonyInstance,
+            typeof(scnEditor).GetMethod(nameof(scnEditor.SaveLevel)),
+            SafePatch.Method(typeof(P_scnEditor_SaveLevel), nameof(P_scnEditor_SaveLevel.Prefix)),
+            null,
+            $"{nameof(scnEditor)}.{nameof(scnEditor.SaveLevel)}");
+        SafePatch.Apply(HarmonyInstance,
             typeof(scnEditor).GetMethod("LoadGameScene", BindingFlags.Instance | BindingFlags.NonPublic),
             null,
             SafePatch.Method(typeof(P_scnEditor_LoadGameScene), nameof(P_scnEditor_LoadGameScene.Postfix)),

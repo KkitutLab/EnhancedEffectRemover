@@ -5,7 +5,6 @@ using O5Kit.Core;
 using O5Kit.Factory;
 using O5Kit.Input;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace EnhancedEffectRemover.UI;
 
@@ -288,13 +287,10 @@ public static class SettingsWindow {
 
     private static void ToggleMod() {
         Settings.Enabled = !Settings.Enabled;
-        if (!Settings.Enabled && !Settings.EnableSave) {
-            Settings.EnableSave = true;
-            RefreshSaveLabel();
-        }
         Settings.Save();
         SaveToggle.Apply(scnEditor.instance, !Settings.Enabled || Settings.EnableSave);
         RefreshEnableLabel();
+        RefreshSaveLabel();
         Log.Msg(Settings.Enabled ? "Mod enabled" : "Mod disabled");
     }
 
@@ -308,13 +304,6 @@ public static class SettingsWindow {
     }
 
     private static void ToggleSave() {
-        if (!Settings.Enabled) {
-            Settings.EnableSave = true;
-            SaveToggle.Apply(scnEditor.instance, true);
-            Settings.Save();
-            RefreshSaveLabel();
-            return;
-        }
         Settings.EnableSave = !Settings.EnableSave;
         SaveToggle.Apply(scnEditor.instance, !Settings.Enabled || Settings.EnableSave);
         Settings.Save();
@@ -464,12 +453,10 @@ public static class SettingsWindow {
     }
 
     private static void EnsureEventSystem() {
-        if (UnityEngine.Object.FindObjectOfType<EventSystem>() != null)
-            return;
-
-        var go = new GameObject("EER_EventSystem");
-        UnityEngine.Object.DontDestroyOnLoad(go);
-        go.AddComponent<EventSystem>();
-        go.AddComponent<StandaloneInputModule>();
+        // Never create our own EventSystem. scnEditor gates wheel zoom on
+        // `EventSystem.current.currentInputModule is CustomStandaloneInputModule`,
+        // so a second EventSystem with the stock StandaloneInputModule steals
+        // `EventSystem.current` and kills the editor mouse wheel.
+        // Our overlay canvas works through the game's own EventSystem (same as Overlayer).
     }
 }
