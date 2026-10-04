@@ -288,6 +288,10 @@ public static class SettingsWindow {
 
     private static void ToggleMod() {
         Settings.Enabled = !Settings.Enabled;
+        if (!Settings.Enabled && !Settings.EnableSave) {
+            Settings.EnableSave = true;
+            RefreshSaveLabel();
+        }
         Settings.Save();
         SaveToggle.Apply(scnEditor.instance, !Settings.Enabled || Settings.EnableSave);
         RefreshEnableLabel();
@@ -304,6 +308,13 @@ public static class SettingsWindow {
     }
 
     private static void ToggleSave() {
+        if (!Settings.Enabled) {
+            Settings.EnableSave = true;
+            SaveToggle.Apply(scnEditor.instance, true);
+            Settings.Save();
+            RefreshSaveLabel();
+            return;
+        }
         Settings.EnableSave = !Settings.EnableSave;
         SaveToggle.Apply(scnEditor.instance, !Settings.Enabled || Settings.EnableSave);
         Settings.Save();
