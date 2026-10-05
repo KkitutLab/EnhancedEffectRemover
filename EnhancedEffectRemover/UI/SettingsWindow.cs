@@ -63,7 +63,7 @@ public static class SettingsWindow {
             ObjectButton = new Color32(0xD9, 0x8A, 0x52, 255),
             ObjectActive = new Color32(0xF0, 0xA1, 0x4D, 255),
             ObjectActiveBright = new Color32(0xFF, 0xCF, 0x91, 255),
-            ObjectInactive = new Color32(0xF0, 0xA1, 0x4D, 102),
+            InactiveAlpha = 102f / 255f,
             MenuHover = new Color32(0xC1, 0xB0, 0x78, 102),
             CardHeader = new Color32(0x55, 0x5A, 0x46, 255),
             CardPanel = new Color32(0x35, 0x38, 0x2D, 255),
@@ -71,16 +71,17 @@ public static class SettingsWindow {
             ButtonHover = new Color32(0xEE, 0xA2, 0x68, 255),
             ButtonPressed = new Color32(0xFF, 0xD6, 0x9E, 255),
             Text = new Color32(0xFF, 0xF7, 0xE8, 255),
-            TextDim = new Color32(0xFF, 0xF7, 0xE8, 153),
-            TextFaint = new Color32(0xFF, 0xF7, 0xE8, 51),
+            TextDimAlpha = 153f / 255f,
+            TextFaintAlpha = 51f / 255f,
             OverlayScrim = new Color32(0x18, 0x1A, 0x14, 148),
             Outline = new Color32(0xE8, 0xDC, 0xC5, 255),
+            ControlOutlineIdle = new Color32(255, 255, 255, 0),
             MathOk = new Color32(0x96, 0xD9, 0x7A, 255),
             MathWarn = new Color32(0xF2, 0xD0, 0x72, 255),
             MathErr = new Color32(0xF0, 0x87, 0x78, 255),
             EditorGuide = new Color32(0x79, 0xC8, 0x5A, 255),
             EditorGuideShadow = new Color32(0x00, 0x00, 0x00, 230),
-            WorkspaceEmpty = new Color32(0xFF, 0xF7, 0xE8, 20),
+            WorkspaceAlpha = 20f / 255f,
             ChannelR = new Color32(0xF0, 0x75, 0x6B, 255),
             ChannelG = new Color32(0x7E, 0xCD, 0x72, 255),
             ChannelB = new Color32(0x91, 0xA8, 0xD8, 255),
@@ -177,8 +178,8 @@ public static class SettingsWindow {
                 _ctx?.NotifyEnabledChanged(v);
             }).Rect;
         var zoomSlider = O5Factory.Slider(_ctx, content, Settings.DefaultCameraZoom, 100f, 1000f, Settings.CameraZoomScale, "F2",
-            ClampMode.Slider, null, v => {
-                Settings.CameraZoomScale = v;
+            ClampMode.Slider, null, null, v => {
+                Settings.CameraZoomScale = (float)v;
                 Settings.Save();
             }, null, "Camera Zoom", nameof(Settings.CameraZoomScale));
         zoomSlider.EnabledWhen = () => Settings.SetCameraZoomScale;
