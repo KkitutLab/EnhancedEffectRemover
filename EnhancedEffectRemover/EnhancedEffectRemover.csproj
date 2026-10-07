@@ -15,8 +15,7 @@
 
     <PropertyGroup>
         <O5KitProject Condition="'$(O5KitProject)' == ''">../../O5Kit/src/O5Kit/O5Kit.csproj</O5KitProject>
-        <O5KitConfiguration Condition="$(Configuration.Contains('Debug'))">Debug_Mono</O5KitConfiguration>
-        <O5KitConfiguration Condition="!$(Configuration.Contains('Debug'))">Release_Mono</O5KitConfiguration>
+        <O5KitConfiguration>$(Configuration)</O5KitConfiguration>
         <NCalcVersion>7.0.2</NCalcVersion>
         <ParlotVersion>1.5.8</ParlotVersion>
         <ImmutableVersion>10.0.10</ImmutableVersion>
