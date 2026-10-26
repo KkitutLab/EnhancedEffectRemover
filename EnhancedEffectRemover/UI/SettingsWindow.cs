@@ -108,21 +108,26 @@ public static class SettingsWindow {
 
         _enableLabel = O5Factory.ControlText(_ctx, content, _ctx.Theme.FontSizeBody);
         RefreshEnableLabel();
-        O5Factory.Button(_ctx, content, ToggleMod, "Toggle Mod", nameof(ToggleMod));
+        O5Factory.Button(_ctx, content, nameof(ToggleMod), new O5ButtonOptions { Text = "Toggle Mod", OnClick = ToggleMod });
 
         _saveLabel = O5Factory.ControlText(_ctx, content, _ctx.Theme.FontSizeBody);
         RefreshSaveLabel();
-        O5Factory.Button(_ctx, content, ToggleSave, "Toggle Save", nameof(ToggleSave));
+        O5Factory.Button(_ctx, content, nameof(ToggleSave), new O5ButtonOptions { Text = "Toggle Save", OnClick = ToggleSave });
 
         RefreshHotkey();
-        _hotkeyButton = O5Factory.Button(_ctx, content, StartCapture, $"Hotkey: {HotkeyText()}", nameof(StartCapture));
-        O5Factory.Toggle(_ctx, content, true, Settings.BlockDuringPlay, v => {
-            Settings.BlockDuringPlay = v;
-            Settings.Save();
-        }, "Block during play", nameof(Settings.BlockDuringPlay));
+        _hotkeyButton = O5Factory.Button(_ctx, content, nameof(StartCapture), new O5ButtonOptions { Text = $"Hotkey: {HotkeyText()}", OnClick = StartCapture });
+        O5Factory.Toggle(_ctx, content, nameof(Settings.BlockDuringPlay), new O5ToggleOptions {
+            DefaultValue = true,
+            Value = Settings.BlockDuringPlay,
+            Text = "Block during play",
+            OnChanged = v => {
+                Settings.BlockDuringPlay = v;
+                Settings.Save();
+            },
+        });
 
         Header(content, "Non-DLC Events");
-        O5Factory.Button(_ctx, content, () => ToggleAll(GroupNonDlc), "Toggle All", nameof(ToggleAll) + GroupNonDlc);
+        O5Factory.Button(_ctx, content, nameof(ToggleAll) + GroupNonDlc, new O5ButtonOptions { Text = "Toggle All", OnClick = () => ToggleAll(GroupNonDlc) });
         AddToggle(content, GroupNonDlc, "Filter", nameof(Settings.Filters), () => Settings.Filters, v => Settings.Filters = v);
         AddToggle(content, GroupNonDlc, "Advanced Filter", nameof(Settings.AdvFilters), () => Settings.AdvFilters, v => Settings.AdvFilters = v);
         AddToggle(content, GroupNonDlc, "Particles", nameof(Settings.Particles), () => Settings.Particles, v => Settings.Particles = v);
@@ -143,13 +148,13 @@ public static class SettingsWindow {
         AddToggle(content, GroupNonDlc, "Default Text (Title)", nameof(Settings.DefaultTexts), () => Settings.DefaultTexts, v => Settings.DefaultTexts = v);
 
         Header(content, "Planet Events");
-        O5Factory.Button(_ctx, content, () => ToggleAll(GroupPlanet), "Toggle All", nameof(ToggleAll) + GroupPlanet);
+        O5Factory.Button(_ctx, content, nameof(ToggleAll) + GroupPlanet, new O5ButtonOptions { Text = "Toggle All", OnClick = () => ToggleAll(GroupPlanet) });
         AddToggle(content, GroupPlanet, "Planet Orbit", nameof(Settings.PlanetOrbit), () => Settings.PlanetOrbit, v => Settings.PlanetOrbit = v);
         AddToggle(content, GroupPlanet, "Planet Scale", nameof(Settings.PlanetScale), () => Settings.PlanetScale, v => Settings.PlanetScale = v);
         AddToggle(content, GroupPlanet, "Planet Radius", nameof(Settings.PlanetRadius), () => Settings.PlanetRadius, v => Settings.PlanetRadius = v);
 
         Header(content, "Track Events");
-        O5Factory.Button(_ctx, content, () => ToggleAll(GroupTrack), "Toggle All", nameof(ToggleAll) + GroupTrack);
+        O5Factory.Button(_ctx, content, nameof(ToggleAll) + GroupTrack, new O5ButtonOptions { Text = "Toggle All", OnClick = () => ToggleAll(GroupTrack) });
         AddToggle(content, GroupTrack, "Animate Track", nameof(Settings.TrackAnimations), () => Settings.TrackAnimations, v => {
             Settings.TrackAnimations = v;
             _resetAnimRow?.gameObject.SetActive(v);
@@ -162,12 +167,12 @@ public static class SettingsWindow {
         });
 
         Header(content, "DLC Events");
-        O5Factory.Button(_ctx, content, () => ToggleAll(GroupDlc), "Toggle All", nameof(ToggleAll) + GroupDlc);
+        O5Factory.Button(_ctx, content, nameof(ToggleAll) + GroupDlc, new O5ButtonOptions { Text = "Toggle All", OnClick = () => ToggleAll(GroupDlc) });
         AddToggle(content, GroupDlc, "HoldSound", nameof(Settings.HoldSounds), () => Settings.HoldSounds, v => Settings.HoldSounds = v);
         AddToggle(content, GroupDlc, "HideIcon & Judgements", nameof(Settings.HideIcons), () => Settings.HideIcons, v => Settings.HideIcons = v);
 
         Header(content, "Miscs");
-        O5Factory.Button(_ctx, content, () => ToggleAll(GroupMisc), "Toggle All", nameof(ToggleAll) + GroupMisc);
+        O5Factory.Button(_ctx, content, nameof(ToggleAll) + GroupMisc, new O5ButtonOptions { Text = "Toggle All", OnClick = () => ToggleAll(GroupMisc) });
         _removeAllRow = AddToggle(content, GroupMisc, "Remove all decorations", nameof(Settings.RemoveAllDecorations),
             () => Settings.RemoveAllDecorations, v => Settings.RemoveAllDecorations = v).Rect;
         AddToggle(content, GroupMisc, "Reset all 'Track Opacity' value to 100%", nameof(Settings.ResetTrackOpacity),
@@ -177,11 +182,20 @@ public static class SettingsWindow {
                 Settings.SetCameraZoomScale = v;
                 _ctx?.NotifyEnabledChanged(v);
             }).Rect;
-        var zoomSlider = O5Factory.Slider(_ctx, content, Settings.DefaultCameraZoom, 100f, 1000f, Settings.CameraZoomScale, "F2",
-            ClampMode.Slider, null, null, v => {
+        var zoomSlider = O5Factory.Slider(_ctx, content, nameof(Settings.CameraZoomScale), new O5SliderOptions {
+            DefaultValue = Settings.DefaultCameraZoom,
+            Min = 100f,
+            Max = 1000f,
+            Value = Settings.CameraZoomScale,
+            Format = "F2",
+            ClampDrag = true,
+            ClampInput = false,
+            Label = "Camera Zoom",
+            OnChanged = v => {
                 Settings.CameraZoomScale = (float)v;
                 Settings.Save();
-            }, null, "Camera Zoom", nameof(Settings.CameraZoomScale));
+            },
+        });
         zoomSlider.EnabledWhen = () => Settings.SetCameraZoomScale;
         _zoomSlider = zoomSlider;
         _zoomRow = zoomSlider.Rect;
@@ -260,10 +274,15 @@ public static class SettingsWindow {
     }
 
     private static O5Toggle AddToggle(Transform parent, string group, string text, string id, Func<bool> get, Action<bool> set) {
-        var toggle = O5Factory.Toggle(_ctx!, parent, true, get(), v => {
-            set(v);
-            Settings.Save();
-        }, text, id);
+        var toggle = O5Factory.Toggle(_ctx!, parent, id, new O5ToggleOptions {
+            DefaultValue = true,
+            Value = get(),
+            Text = text,
+            OnChanged = v => {
+                set(v);
+                Settings.Save();
+            },
+        });
 
         if (!_toggles.TryGetValue(group, out var list)) {
             list = [];
